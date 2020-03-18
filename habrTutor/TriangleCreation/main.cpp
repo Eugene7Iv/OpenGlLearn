@@ -75,9 +75,9 @@ int main()
 	glfwSetKeyCallback(window, key_callback);
 
 	float vertices[] = {
-	-0.5f, -0.5f, 0.0f,
+	-1.0f, -0.5f, 0.0f,
 	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	 1.0f,  0.5f, 0.0f
 	};
 	
 	GLuint VAO;
@@ -85,9 +85,16 @@ int main()
 	glBindVertexArray(VAO);
 
 	//send to GPU input vertex data
-	GLuint VBO;
-	glGenBuffers(1, &VBO);
+	// pointer to our data in GPU's memory also it can interpret as unic ID of OpenGL's object
+	GLuint VBO; 
+	//parameters (1,&VBO) : "1" is number of requered object(buffer) , &VBO has pointer to new allocated data for new object(buffer)
+	//memory allocation under vertices data
+	glGenBuffers(1, &VBO); 
+	// GL_ARRAY_BUFFER is type of vertex data buffer, 
+	// it bind specified buffer type to newly created buffer
+	// GL_ARRAY_BUFFER associated with VBO. All manipulating with GL_ARRAY_BUFFER will be ref to VBO
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	// here we specify type of targeted bufer, then it's size, next data, at the end mode
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	//instructing of GPU how it should process it
